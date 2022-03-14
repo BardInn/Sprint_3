@@ -1,0 +1,8 @@
+OrderGenerator.class
+CourierCredentials.class
+OrderClient.class
+CourierCredentials$CourierCredentialsBuilder.class
+ScooterRestClient.class
+Courier$CourierBuilder.class
+Courier.class
+CourierClient.class
