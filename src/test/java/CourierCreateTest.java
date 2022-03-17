@@ -97,9 +97,9 @@ public class CourierCreateTest extends FeatureTest {
 	public void successRequestTrueTest() {
 		Courier courier = Courier.getRandom();
 		ValidatableResponse isCreated = courierClient.create(courier);
-		String successMessage = isCreated.extract().asString();
+		boolean successMessage = isCreated.extract().path("ok");
 
-		assertEquals("ok:true", successMessage.replaceAll("[{}\"]", ""));
+		assertTrue("ok:true", successMessage);
 	}
 
 	@Test

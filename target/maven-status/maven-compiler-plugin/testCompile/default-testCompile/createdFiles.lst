@@ -1,6 +1,5 @@
 CourierCreateTest.class
 CreatingAnOrderColorTest.class
-GetOrderParametrizedTest.class
 FeatureTest.class
 CourierLoginTest.class
 CourierOrderListTest.class

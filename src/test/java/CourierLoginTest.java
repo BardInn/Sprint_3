@@ -46,11 +46,12 @@ private int courierId;
 	@Description("Try to login courier without login")
 	public void courierLoginWithMissingLoginTest() {
 		CourierCredentials courierCredentials = CourierCredentials.builder()
-				.password(courier.getLogin())
+				.password(courier.getPassword())
 				.build();
 		ValidatableResponse loginResponse = courierClient.login(courierCredentials);
 		int statusCode = loginResponse.extract().statusCode();
-		assertThat("Courier cannot login", statusCode, is(not(200)));
+		
+		assertThat("Courier cannot login", statusCode, is(400));
 	}
 
 
@@ -63,9 +64,8 @@ private int courierId;
 				.build();
 		ValidatableResponse loginResponse = courierClient.login(courierCredentials);
 		int statusCode = loginResponse.extract().statusCode();
-
+		
 		assertThat("Courier cannot login", statusCode, equalTo(400));
-
 	}
 
 	@Test
@@ -97,7 +97,6 @@ private int courierId;
 		int statusCode = loginResponse.extract().statusCode();
 
 		assertThat("Courier not found", statusCode, equalTo(404));
-		
 	}
 
 }

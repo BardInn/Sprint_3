@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -36,7 +37,6 @@ public class CourierOrderListTest {
 	@DisplayName("Get list of orders")
 	@Description("Try to received orders without passing any parameters")
 	public void getListOfAllOrders() {
-		
 		ValidatableResponse getListOfOrders = orderClient.receivingListOfAllOrders();
 		ArrayList<String> listOfOrders = getListOfOrders.extract().path("orders");
 		int statusCode = getListOfOrders.extract().statusCode();
@@ -50,8 +50,7 @@ public class CourierOrderListTest {
 	@DisplayName("Orders available for courier")
 	@Description("Try to get list of orders for current courier")
 	public void getListOfActiveCouriersOrders() {
-		String parameters = "?courierId=" + courierId;
-		ValidatableResponse getTenOrders = orderClient.receivingListOfOrders(parameters);
+		ValidatableResponse getTenOrders = orderClient.listOfActiveCouriersOrders(courierId);
 		ArrayList<String> listOfOrders = getTenOrders.extract().path("orders");
 		int statusCode = getTenOrders.extract().statusCode();
 
@@ -63,11 +62,37 @@ public class CourierOrderListTest {
 	@DisplayName("Orders available for courier in certain area")
 	@Description("Try to get list of orders for courier in certain metro station")
 	public void getListOfAvailableCouriersOrderNearTheStation() {
-		String parameters = "?" + courierId + "&nearestStation=[\"5\", \"6\"]";
-		ValidatableResponse getTenOrders = orderClient.receivingListOfOrders(parameters);
+		List<String> nearestStation = new ArrayList<>();
+		nearestStation.add("13");
+		ValidatableResponse getTenOrders = orderClient.listOfAvailableCouriersOrderNearTheStation(courierId, nearestStation);
 		ArrayList<String> listOfOrders = getTenOrders.extract().path("orders");
 		int statusCode = getTenOrders.extract().statusCode();
 
+		assertThat("Order received", statusCode, equalTo(200));
+		assertNotEquals(null, listOfOrders);
+	}
+
+	@Test
+	@DisplayName("Get list of orders")
+	@Description("Try to get list of orders with limiting parameters")
+	public void getListOfTenAvailableOrders() {
+		ValidatableResponse getTenOrders = orderClient.receivingListOfTenAvailableOrders();
+		ArrayList<String> listOfOrders = getTenOrders.extract().path("orders");
+		int statusCode = getTenOrders.extract().statusCode();
+		assertThat("Order received", statusCode, equalTo(200));
+		assertNotEquals(null, listOfOrders);
+
+	}
+
+	@Test
+	@DisplayName("Get list of order near the metrostation")
+	@Description("Try to get list of 10 orders near the metrostation")
+	public void getListOfTenOrdersNearByTheMetroStation() {
+		List<String> nearestStation = new ArrayList<>();
+		nearestStation.add("13");
+	    ValidatableResponse getTenOrdersNearTheMetro = orderClient.listOfTenOrdersNearByTheMetroStation(nearestStation);
+		ArrayList<String> listOfOrders = getTenOrdersNearTheMetro.extract().path("orders");
+		int statusCode = getTenOrdersNearTheMetro.extract().statusCode();
 		assertThat("Order received", statusCode, equalTo(200));
 		assertNotEquals(null, listOfOrders);
 	}

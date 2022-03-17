@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: CourierOrderListTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.64 s - in CourierOrderListTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.263 s - in CourierOrderListTest
